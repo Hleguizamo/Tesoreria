@@ -1,0 +1,113 @@
+<?php
+
+namespace Wapp\ProveedorBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * EstadoCuenta
+ *
+ * @ORM\Table(name="estado_cuenta", indexes={@ORM\Index(name="acreedor", columns={"proveedor_id"}), @ORM\Index(name="proveedor_id", columns={"proveedor_id"})})
+ * @ORM\Entity
+ */
+class EstadoCuenta
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="estado", type="string", length=512, nullable=false)
+     */
+    private $estado;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="referencia", type="string", length=512, nullable=false)
+     */
+    private $referencia;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_pago", type="date", nullable=false)
+     */
+    private $fechaPago = '0000-00-00';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero_documento", type="string", length=512, nullable=false)
+     */
+    private $numeroDocumento;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="clase", type="string", length=512, nullable=false)
+     */
+    private $clase;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bloqueo_pago", type="string", length=512, nullable=false)
+     */
+    private $bloqueoPago;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_documento", type="date", nullable=false)
+     */
+    private $fechaDocumento = '0000-00-00';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vencimiento_neto", type="string", length=512, nullable=false)
+     */
+    private $vencimientoNeto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="importe_mi", type="string", length=512, nullable=false)
+     */
+    private $importeMi;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dv", type="string", length=512, nullable=false)
+     */
+    private $dv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="texto", type="text", length=65535, nullable=false)
+     */
+    private $texto;
+
+    /**
+     * @var \Proveedor
+     *
+     * @ORM\ManyToOne(targetEntity="Proveedor")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="proveedor_id", referencedColumnName="id")
+     * })
+     */
+    private $proveedor;
+
+
+}
+

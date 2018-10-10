@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="downloadpost" style="font-size:24px;">Editar Administrador</div>	
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Guardar cambios" class="{{ button_css|default("btn btn-primary") }}" />
+    {{ form_end(edit_form) }}
+
+    <div>&nbsp;</div>
+    <div>
+        <a href="{{ path('administrador_index') }}" class="{{ button_css|default("btn btn-link") }}">
+		<i class="fa fa-long-arrow-left"></i> Volver
+		</a>		
+	</div>
+    <div>&nbsp;</div>	
+{% endblock %}

@@ -1,0 +1,21 @@
+wapp_administrador_administrador:
+        resource: "@WappAdministradorBundle/Resources/config/routing/administrador.yml"
+        prefix:   /administrador
+wapp_administrador_proveedor:
+        resource: "@WappAdministradorBundle/Resources/config/routing/proveedor.yml"
+        prefix:   /proveedor
+wapp_administrador_estadoCuenta:
+        resource: "@WappAdministradorBundle/Resources/config/routing/estadoCuenta.yml"
+        prefix:   /estadoCuenta
+
+administrador_default:
+    resource: "@WappAdministradorBundle/Resources/config/routing/default.yml"
+    prefix:   /default 
+
+administrador_homepage:
+    path:     /
+    defaults: { _controller: WappAdministradorBundle:Default:login }
+
+administrador_administrador:
+        resource: "@WappAdministradorBundle/Resources/config/routing/administrador.yml"
+        prefix:   /administrador

@@ -1,0 +1,92 @@
+security:
+    encoders:
+        administrador:
+            class: Wapp\AdministradorBundle\Entity\Administrador
+            algorithm: plaintext
+        proveedor:
+            class: Wapp\ProveedorBundle\Entity\Proveedor
+            algorithm: plaintext
+        
+    providers:
+        administrador:
+            entity: 
+                class: Wapp\AdministradorBundle\Entity\Administrador
+                property: usuario
+        proveedor:
+            entity:
+                class: Wapp\ProveedorBundle\Entity\Proveedor
+                property: nit
+
+    firewalls:
+        administrador_login:
+             pattern:  ^/administrador/default/login$
+             security: false
+
+        administrador_login_error:
+             pattern:  ^/administrador/default/loginError/*
+             security: false
+
+        administrador_secured_area:
+            pattern:    ^/administrador/
+            provider: administrador
+            form_login:
+                check_path: /administrador/default/login_check
+                login_path: /administrador/default/login
+                default_target_path: /administrador/default/
+                always_use_default_target_path: true
+                success_handler: administrador.login_success_handler.class
+                failure_handler: administrador.login_success_handler.class     
+            logout:
+                path:   administrador_default_logout
+                target: /administrador
+                invalidate_session: false
+                success_handler: ~ 
+
+        proveedor_login:
+             pattern:  ^/proveedor/default/login$
+             security: false
+
+        proveedor_login_error:
+            pattern:  ^/proveedor/default/loginError/*
+            security: false
+
+        proveedor_secured_area:
+            pattern:    ^/proveedor/
+            provider: proveedor
+            form_login:
+                check_path: /proveedor/default/login_check
+                login_path: /proveedor/default/login
+                default_target_path: /proveedor/default/
+                always_use_default_target_path: true
+                success_handler: proveedor.login_success_handler.class
+                failure_handler: proveedor.login_success_handler.class     
+            logout:
+                path:   proveedor_default_logout
+                target: /proveedor
+                invalidate_session: false
+                success_handler: ~
+
+    access_control:
+        administrador_login:
+            path: /administrador/default/login
+            roles: IS_AUTHENTICATED_ANONYMOUSLY        
+        administrador_login_check:
+            path: /administrador/default/login_check
+            roles: IS_AUTHENTICATED_ANONYMOUSLY
+        administrador_area:
+            path: /administrador/.*
+            roles: [ROLE_ADMINISTRADOR]
+        proveedor_login:
+            path: /proveedor/default/login
+            roles: IS_AUTHENTICATED_ANONYMOUSLY        
+        proveedor_login_check:
+            path: /proveedor/default/login_check
+            roles: IS_AUTHENTICATED_ANONYMOUSLY
+        proveedor_area:
+            path: /proveedor/.*
+            roles: [ROLE_USER]
+        proveedor_area:
+            path: /proveedor
+            roles: [ROLE_USER]
+
+        

@@ -1,0 +1,10 @@
+parameters:
+  proveedor.login_success_handler.class: Wapp\ProveedorBundle\Listener\LoginListener
+services:
+#    wapp_proveedor.example:
+#        class: Wapp\ProveedorBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+  proveedor.login_success_handler.class:
+    class: %proveedor.login_success_handler.class%
+    public: false
+    arguments:  ['@service_container']

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div style="min-width:400px;">&nbsp;</div>
+    <div class="downloadpost" style="font-size:24px;">Nuevo Proveedor</div>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}        
+		<input type="submit" value="Crear Proveedor" class="{{ button_css|default("btn btn-primary") }}" />
+    {{ form_end(form) }}
+
+    <div>&nbsp;</div>	
+	<div>
+        <a href="{{ path('proveedor_index') }}" class="{{ button_css|default("btn btn-link") }}">
+		<i class="fa fa-long-arrow-left"></i> Volver
+		</a>
+	</div>
+{% endblock %}

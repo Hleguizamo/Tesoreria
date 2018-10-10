@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="downloadpost" style="font-size:24px;">Proveedores</div>	
+	<div>
+	<div style="width:400px;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	  	<form name="form1" id="form1" method="post" action="{{ path('proveedor_find') }}">
+		<td width="60%">
+		<input type="text" name="searchv" id="searchv" placeholder="NIT" class="form-control btn-sm" style="width:180px; height:36px;" value="{% if data.searchv is defined %}{% if data.searchv != "advanced" %}{{data.searchv}}{% endif %}{% endif %}">				
+		</td>
+		<td width="5%">&nbsp;</td>
+		<td width="5%">
+		<input type="submit" value="Buscar" class="{{ button_css|default("btn btn-sm btn-primary") }}" />	
+		</td>
+		</form>						
+		<td width="5%">&nbsp;</td>
+		<td width="5%">
+			<button class="btn btn-primary btn-sm btn-new" data-toggle="modal" data-target="#agregarPunto">
+				 Búsqueda Avanzada
+			</button>
+		</td>
+		<td width="5%">&nbsp;</td>
+		<td width="5%">
+			<input type="button" value="Ver Todos" class="{{ button_css|default("btn btn-sm btn-primary") }}" onClick="window.location.href='{{ path('proveedor_index') }}'" />
+		</td>
+		<td width="5%">&nbsp;</td>
+		<td width="5%">
+			<input type="button" value="Crear Nuevo Proveedor" class="{{ button_css|default("btn btn-sm btn-primary") }}" onClick="window.location.href='{{ path('proveedor_new') }}'" />			
+		</td>
+	  </tr>
+	</table>
+	<div style="height:10px;">&nbsp;</div>	
+	</div>	
+	
+	<div  style="display: none;"  class="modal fade" id="agregarPunto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Búsqueda Avanzada</h4>
+					</div>
+					<form name="form2" id="form2" method="post" action="{{ path('proveedor_find') }}">
+					<div class="modal-body">						 								
+							<table width="100%" border="0" cellspacing="3" cellpadding="3">							
+						  <tr>
+							<td width="50%" align="right" valign="top">Nit:&nbsp;&nbsp;</td>
+							<td width="50%" valign="top"><input type="text" name="nit" id="nit"><br><br></td>
+						  </tr>
+						  <tr>
+							<td align="right" valign="top">Nombre:&nbsp;&nbsp;</td>
+							<td><input type="text" name="razon_social" id="razon_social"><br><br>
+							<input type="hidden" name="searchv" id="searchv" value="advanced">
+							</td>
+						  </tr>	
+						  <tr>
+							<td align="right" valign="top">Email:&nbsp;&nbsp;</td>
+							<td><input type="text" name="email" id="email"><br><br></td>
+						  </tr>						  					  						  
+						</table>
+					 </div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+					 </div>
+					 </form>
+				 </div>
+			 </div>
+		 </div>
+	</div>
+		{% if total > 0 %}
+			{{ include('WappAdministradorBundle:proveedor:_paginar.html.twig') }}
+		{% endif %}		 
+    <table class="table table-striped">
+        <thead>
+            <tr>                
+                <td class="tableclass1Top" style="background-color:#BACADA;">#</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Nit</td>
+                <td class="tableclass1Top" style="background-color:#BACADA;">Nombre</td>
+                <td class="tableclass1Top" style="background-color:#BACADA;">Nombre contacto</td>
+                <td class="tableclass1Top" style="background-color:#BACADA;">Email</td>
+                <td class="tableclass1Top" style="background-color:#BACADA;">Contraseña</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Estado</td>
+                <td class="tableclass1Top" style="background-color:#BACADA;">Editar</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Eliminar</td>
+            </tr>
+        </thead>
+        <tbody>
+		{% set counter = (iniciaResultados + 1)  %}
+        {% for proveedor in proveedors %}
+            <tr>                
+                <td class="tableclass1">{{ counter }}</td>
+				<td class="tableclass1">{{ proveedor.nit }}</td>
+                <td class="tableclass1">{{ proveedor.razonSocial }}</td>
+                <td class="tableclass1">{{ proveedor.nombreContacto }}</td>
+                <td class="tableclass1">{{ proveedor.email }}</td>
+                <td class="tableclass1">{{ proveedor.contrasena }}</td>
+				<td class="tableclass1">{% if proveedor.public == 1 %}Activado{% else %}Desactivado{% endif %}</td>
+                <td>                  
+                    <a href="{{ path('proveedor_edit', { 'id': proveedor.id }) }}" class="btn btn-xs btn-link">
+					<i class="fa fa-edit"></i>Editar</a>					
+                </td>
+				<td>                    
+					<a href="javascript:void(0);" class="btn btn-xs btn-link" onClick="confirmdelete('{{ proveedor.razonSocial }}','{{ path('proveedor_dindex', { 'id': proveedor.id }) }}')">
+					<i class="fa fa-remove"></i>Eliminar
+					</a>
+                    
+                </td>
+            </tr>
+			{% set counter = counter + 1 %}
+        {% endfor %}
+        </tbody>
+    </table>
+	{% if total > 0 %}
+		{{ include('WappAdministradorBundle:proveedor:_paginar.html.twig') }}
+	{% endif %}	
+		<script>
+		function confirmdelete(uservar, delvar){			
+			swal({
+			  title: "Eliminar",
+			  text: "¿Realmente desea eliminar el usuario: " + uservar + "?",
+			  type: "error",
+			  showCancelButton: true,
+			  cancelButtonText: "Cancelar",
+			  confirmButtonClass: "btn-danger",
+			  confirmButtonText: "Eliminar",
+			  closeOnConfirm: false
+			},
+			function(){			 
+			  window.location.href=delvar;
+			});
+		}
+	</script>
+{% endblock %}

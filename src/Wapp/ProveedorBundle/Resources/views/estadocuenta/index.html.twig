@@ -1,0 +1,194 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	{% set totaltt = total  %}	
+	{% set resultados = estadoCuentas %}	
+    <div class="downloadpost" style="font-size:24px;">Estado de cuenta <span class="tableclass1">- Última Actualización: {{ 'now'|date('Y - m - d') }}</span></div>	
+	<div>	
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	  	<form name="form1" method="post" action="{{ path('estadocuenta_find') }}">
+		<td width="1%">		
+		<input type="text" name="searchv" id="searchv" placeholder="No. Documento" class="form-control btn-sm" style="width:180px; height:36px;" value="{% if data.searchv is defined %}{% if data.searchv != "advanced" %}{{data.searchv}}{% endif %}{% endif %}">				
+		</td>
+		<td width="1%">&nbsp;</td>
+		<td width="1%">
+		<input type="submit" value="Buscar" class="{{ button_css|default("btn btn-sm btn-primary") }}" />
+		</td>
+		</form>						
+		<td width="1%">&nbsp;</td>
+		<td width="1%">
+			<button class="btn btn-primary btn-sm btn-new" data-toggle="modal" data-target="#agregarPunto">
+				 Búsqueda Avanzada
+			</button>
+		</td>
+		<td width="1%">&nbsp;</td>
+		<td width="1%">
+			<input type="button" value="Ver Todos" class="{{ button_css|default("btn btn-sm btn-primary") }}" onClick="window.location.href='{{ path('estadocuenta_index') }}'" />
+		</td>	
+		<td width="1%">&nbsp;</td>	
+		<td width="1%" class="downloadpost">
+		<button class="btn btn-primary btn-sm btn-new" onClick="window.location.href='{{ path('estadocuenta_exportxls') }}'">
+			 <i class="fa fa-file-excel-o"></i> Descargar Excel
+		</button>			
+		</td>
+		<td width="1%">&nbsp;</td>	
+		<td width="1%" class="downloadpost">
+			<button class="btn btn-primary btn-sm btn-new" onClick="window.location.href='{{ path('estadocuenta_exportpdf') }}'">
+				<i class="fa fa-file-pdf-o"></i> Descargar PDF
+			</button>			
+		</td>
+		<td width="1%">&nbsp;</td>
+		<td width="1%" class="downloadpost">
+			<a target="_blank" href="/EstadoCuentaProveedores.pdf">
+				 <button class="btn btn-danger btn-sm" onclick="" type="button"><i class="fa fa-book"></i> Manual de la aplicación</button>
+			</a>		
+		</td>		
+		<td width="67%">&nbsp;</td>	
+	  </tr>
+	</table>	
+	</div>	
+	<div  style="display: none;"  class="modal fade" id="agregarPunto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Búsqueda Avanzada</h4>
+					</div>
+					<form name="form2" method="post" action="{{ path('estadocuenta_find') }}">
+					<div class="modal-body">						 								
+							<table width="100%" border="0" cellspacing="3" cellpadding="3">
+						  <tr>
+							<td width="50%" align="right" valign="top">Estado:&nbsp;&nbsp;</td>
+							<td width="50%" valign="top">
+							<select id="estado" name="estado">
+							<option value="" selected="selected">Todos</option>
+							<option value="Pendiente">Pendiente</option>
+							<option value="Preliminar">Preliminar</option>
+							<option value="Vencido">Vencido</option>
+							</select>
+							<br><br></td>
+						  </tr>
+						  <tr>
+							<td align="right" valign="top">Referencia:&nbsp;&nbsp;</td>
+							<td><input type="text" name="referencia" id="referencia"><br><br></td>
+						  </tr>
+						  <tr>
+							<td align="right" valign="top">Fecha Pago:&nbsp;&nbsp;</td>
+							<td>							
+							<input name="fechapago" id="fechapago" type="date" {{ block('widget_attributes') }} style="height:27px;"/><br><br>							
+							</td>
+						  </tr>
+						  <tr>
+							<td align="right" valign="top">No. Documento:&nbsp;&nbsp;</td>
+							<td>							
+							<input type="text" name="ndocumento" id="ndocumento"><br><br>							
+							</td>
+						  </tr>
+						  <tr>
+							<td align="right" valign="top">Clase:&nbsp;&nbsp;</td>
+							<td><input type="text" name="clase" id="clase"><br><br></td>
+						  </tr>
+						  <tr>
+							<td align="right" valign="top">Fecha documento:&nbsp;&nbsp;</td>
+							<td>							
+								<input name="fechadoc" id="fechadoc" type="date" {{ block('widget_attributes') }} style="height:27px;"/><br><br>
+							</td>
+						  </tr>
+						  <tr>
+							<td align="right" valign="top">Vencimiento Neto:&nbsp;&nbsp;</td>
+							<td>
+							<select id="vencimiento" name="vencimiento">
+							<option value="" selected="selected">Todos</option>
+							<option value="Atrasado">Atrasado</option>
+							<option value="No Vencido">No Vencido</option>
+							</select>
+							<br><br>
+							</td>
+						  </tr>
+						  <tr>
+							<td align="right" valign="top">Div:&nbsp;&nbsp;</td>
+							<td>
+							<select id="dv" name="dv">
+							<option value="" selected="selected">Todos</option>
+							<option value="Pereira">Pereira</option>
+							<option value="Barranquilla">Barranquilla</option>
+							<option value="Medellin">Medellin</option>
+							<option value="Cali">Cali</option>
+							<option value="Cota">Cota</option>
+							<option value="Bucaramanga">Bucaramanga</option>
+							</select>
+							</td>
+						  </tr>
+						</table>
+					 </div>
+					 <div class="modal-footer">
+						<input type="hidden" name="searchv" id="searchv" value="advanced">
+						<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+					 </div>
+					 </form>
+				 </div>
+			 </div>
+		 </div>	
+		{% if total > 0 %}
+			{{ include('WappProveedorBundle:estadocuenta:_paginar.html.twig') }}
+		{% endif %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td class="tableclass1Top" style="background-color:#BACADA;">#</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Estado</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Referencia</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Fecha pago</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">No. Documento</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Clase</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Bloqueo pago</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Fecha Doc</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Vencimiento Neto</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Importe en ML</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Div</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Texto</td>
+            </tr>
+        </thead>
+        <tbody>
+		{% set counter = (iniciaResultados + 1)  %}
+		{% set totalv = 0  %}
+        {% for estadoCuentum in estadoCuentas %}
+            <tr>				
+				<td class="tableclass1">{{ counter }}</td>
+				<td  class="tableclass1" align="center"><img src="{{ asset('images/' ~ estadoCuentum.estado ~ '.png') }}" alt="Inicio" /><br>{{ estadoCuentum.estado }}</td>
+                <td class="tableclass1">{{ estadoCuentum.referencia }}</td>
+                <td class="tableclass1">{% if estadoCuentum.fechaPago %}{{ estadoCuentum.fechaPago|date('Y-m-d') }}{% endif %}</td>
+                <td class="tableclass1">{{ estadoCuentum.numeroDocumento }}</td>
+                <td class="tableclass1">{{ estadoCuentum.clase }}</td>
+                <td class="tableclass1">{{ estadoCuentum.bloqueoPago }}</td>
+                <td class="tableclass1">{% if estadoCuentum.fechaDocumento %}{{ estadoCuentum.fechaDocumento|date('Y-m-d') }}{% endif %}</td>                
+				<td class="tableclass1" align="center"><img src="{{ asset('images/' ~ estadoCuentum.vencimientoNeto ~ '.png') }}" alt="Inicio" /><br>{{ estadoCuentum.vencimientoNeto }}</td>
+                <td class="tableclass1">{{ estadoCuentum.importeMi|number_format(0, '.', ',') }}</td>
+                <td class="tableclass1">{{ estadoCuentum.dv }}</td>
+                <td class="tableclass1">{{ estadoCuentum.texto }}</td>				
+            </tr>
+			{% set counter = counter + 1 %}
+			{% set totalv = totalv + estadoCuentum.importeMi %}
+        {% endfor %}
+			<tr>
+                <td class="tableclass1Top" style="background-color:#BACADA;">&nbsp;</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">&nbsp;</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">&nbsp;</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">&nbsp;</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">&nbsp;</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">&nbsp;</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">&nbsp;</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">&nbsp;</td>
+				<td class="tableclass1Top" style="background-color:#BACADA; text-align:right;">Total:</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">{{totalv|number_format(0, '.', ',')}}</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">&nbsp;</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>	
+	{% if total > 0 %}
+		{{ include('WappProveedorBundle:estadocuenta:_paginar.html.twig') }}
+	{% endif %}
+</ul>
+{% endblock %}

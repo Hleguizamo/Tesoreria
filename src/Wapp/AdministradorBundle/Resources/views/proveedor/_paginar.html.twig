@@ -1,0 +1,68 @@
+<div style="text-align:left;">
+{% set counterr = 0 %}
+
+{% set pagsdiv = total / cantidadPorPagina %}
+{% set temp1 = pagsdiv|round(0, 'floor') %}
+{% set temp2 =  temp1 / pagsdiv %}
+
+{% set sumvar = 0 %}
+{% if temp2 < 1 %} 
+	{% set sumvar = 1 %}
+{% endif %}
+
+{% set totalpaginas = (temp1) + sumvar %}
+{% if totalpaginas < 1 %} 
+	{% set totalpaginas = 1 %}
+{% endif %}
+<ul class="pagination pagination-sm">
+	<li><a href="#"><b>Total: {{ total }} | Pagina: {{ paginaActual }} </b></a></li>
+	<li class="dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+	Resultados por pagina: {% if cantidadPorPagina == '10000' %} Todos {% else %} {{cantidadPorPagina}} {% endif %}<span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu">
+		<li><a href="javascript:void(0);" onClick="sendform(0, 20);">20</a></li>
+		<li><a href="javascript:void(0);" onClick="sendform(0, 50);">50</a></li>
+		<li><a href="javascript:void(0);" onClick="sendform(0, 100);">100</a></li>
+		<li><a href="javascript:void(0);" onClick="sendform(0, 200);">200</a></li>
+		<li><a href="javascript:void(0);" onClick="sendform(0, 10000);">Todos</a></li>
+	</ul>	
+	</li>	
+	{% if totalpaginas > 1 %}
+	<li class="previous"><a href="javascript:void(0);" onClick="sendform({{ paginaActual - 2 }}, {{cantidadPorPagina}});">&larr; Anterior</a></li>  
+	{% for i in 1..totalpaginas %}
+    <li {% if paginaActual == i %} class="active" {% endif %}><a href="javascript:void(0);" onClick="sendform({{ i - 1 }}, {{cantidadPorPagina}});">{{ i }}</a></li>
+	{% endfor %}
+	<li class="next"><a href="javascript:void(0);" onClick="sendform({{ paginaActual }}, {{cantidadPorPagina}});">Siguiente &rarr;</a></li>			
+	{% endif %}
+</ul>
+</div>
+<form name="paginateform1" id="paginateform1" method="post" action="{{ path('proveedor_index') }}">
+	<input name="paginaActual" id="paginaActual" type="hidden" value="">
+	<input name="cantidadPorPagina" id="cantidadPorPagina" type="hidden" value="">	
+</form>
+<form name="paginateform2" id="paginateform2" method="post" action="{{ path('proveedor_find') }}">
+	<input name="paginaActual" id="paginaActual2" type="hidden" value="">
+	<input name="cantidadPorPagina" id="cantidadPorPagina2" type="hidden" value="">
+	{% if data.nit is defined %}<input name="nit" id="nit" type="hidden" value="{{data.nit}}">{% endif %}
+	{% if data.razon_social is defined %}<input name="razon_social" id="razon_social" type="hidden" value="{{data.razon_social}}">{% endif %}	
+	{% if data.email is defined %}<input name="email" id="email" type="hidden" value="{{data.email}}">{% endif %}	
+	<input name="searchv" id="searchv" type="hidden" value="{% if data.searchv is defined %}{{data.searchv}}{% endif %}">	
+</form>
+<script>
+var totalpaginas = '{{ totalpaginas - 1 }}';
+var casevar = '{{ casevar }}';
+function sendform(valuevar, cantvar){	
+	if(valuevar <= 0){ valuevar = 0 }
+	if(valuevar >= totalpaginas){ valuevar = totalpaginas }
+	if(casevar == "index"){
+		document.getElementById("paginaActual").value = valuevar;
+		document.getElementById("cantidadPorPagina").value = cantvar;
+		document.getElementById("paginateform1").submit();	
+	}else{
+		document.getElementById("paginaActual2").value = valuevar;
+		document.getElementById("cantidadPorPagina2").value = cantvar;
+		document.getElementById("paginateform2").submit();	
+	}
+}
+</script>

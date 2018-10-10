@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="downloadpost" style="font-size:24px;">Administradores</div>	
+	<div>
+	<div style="width:400px;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	  	<form name="form1" id="form1" method="post" action="{{ path('administrador_find') }}">
+		<td width="60%">
+		<input type="text" name="searchv" id="searchv" placeholder="Usuario">				
+		</td>
+		<td width="5%">&nbsp;</td>
+		<td width="5%">
+		<input type="submit" value="Buscar" class="{{ button_css|default("btn btn-sm btn-primary") }}" />	
+		</td>
+		</form>						
+		<td width="5%">&nbsp;</td>
+		<td width="5%">
+			<button class="btn btn-primary btn-sm btn-new" data-toggle="modal" data-target="#agregarPunto">
+				 Búsqueda Avanzada
+			</button>
+		</td>
+		<td width="5%">&nbsp;</td>
+		<td width="5%">
+			<input type="button" value="Ver Todos" class="{{ button_css|default("btn btn-sm btn-primary") }}" onClick="window.location.href='{{ path('administrador_index') }}'" />
+		</td>
+		<td width="5%">&nbsp;</td>
+		<td width="5%">
+			<input type="button" value="Crear Nuevo Administrador" class="{{ button_css|default("btn btn-sm btn-primary") }}" onClick="window.location.href='{{ path('administrador_new') }}'" />			
+		</td>
+	  </tr>
+	</table>
+	<div style="height:10px;">&nbsp;</div>	
+	</div>	
+	
+	<div  style="display: none;"  class="modal fade" id="agregarPunto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Búsqueda Avanzada</h4>
+					</div>
+					<form name="form2" id="form2" method="post" action="{{ path('administrador_find') }}">
+					<div class="modal-body">						 								
+							<table width="100%" border="0" cellspacing="3" cellpadding="3">
+							<tr>
+							<td align="right" valign="top">Nombre:&nbsp;&nbsp;</td>
+							<td><input type="text" name="nombre" id="nombre"><br><br>
+							<input type="hidden" name="searchv" id="searchv" value="advanced">
+							</td>
+						  </tr>	
+						  <tr>
+							<td width="50%" align="right" valign="top">Usuario:&nbsp;&nbsp;</td>
+							<td width="50%" valign="top"><input type="text" name="usuario" id="usuario"><br><br></td>
+						  </tr>
+						  <tr>
+							<td align="right" valign="top">Email:&nbsp;&nbsp;</td>
+							<td><input type="text" name="email" id="email"><br><br></td>
+						  </tr>						  					  						  
+						</table>
+					 </div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+					 </div>
+					 </form>
+				 </div>
+			 </div>
+		 </div>
+		 </div>
+		{% if total > 0 %}
+			{{ include('WappAdministradorBundle:administrador:_paginar.html.twig') }}
+		{% endif %}	 
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td class="tableclass1Top" style="background-color:#BACADA;">#</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Nombre</td>
+                <td class="tableclass1Top" style="background-color:#BACADA;">Usuario</td>
+                <td class="tableclass1Top" style="background-color:#BACADA;">Contrasena</td>
+                <td class="tableclass1Top" style="background-color:#BACADA;">Email</td>                
+                <td class="tableclass1Top" style="background-color:#BACADA;">Editar</td>
+				<td class="tableclass1Top" style="background-color:#BACADA;">Eliminar</td>
+            </tr>
+        </thead>
+        <tbody>
+		{% set counter = (iniciaResultados + 1)  %}
+        {% for administrador in administradors %}
+            <tr>                
+                <td class="tableclass1">{{ counter }}</td>
+				<td class="tableclass1">{{ administrador.nombre }}</td>
+                <td class="tableclass1">{{ administrador.usuario }}</td>
+                <td class="tableclass1">{{ administrador.contrasena }}</td>
+                <td class="tableclass1">{{ administrador.email }}</td>                
+                <td class="tableclass1">                    					
+					<a href="{{ path('administrador_edit', { 'id': administrador.id }) }}" class="btn btn-sm btn-link">
+					<i class="fa fa-edit"></i> Editar
+					</a>					
+                </td>
+				<td class="tableclass1">                    					
+					<a href="javascript:void(0);" class="btn btn-sm btn-link" onClick="confirmdelete('{{ administrador.nombre }}','{{ path('administrador_dindex', { 'id': administrador.id }) }}')">
+					<i class="fa fa-remove"></i>Eliminar
+					</a>					
+                </td>
+            </tr>
+			{% set counter = counter + 1 %}
+        {% endfor %}
+        </tbody>
+    </table>
+	{% if total > 0 %}
+		{{ include('WappAdministradorBundle:administrador:_paginar.html.twig') }}
+	{% endif %}	 
+	<script>
+		function confirmdelete(uservar, delvar){			
+			swal({
+			  title: "Eliminar",
+			  text: "¿Realmente desea eliminar el usuario: " + uservar + "?",
+			  type: "error",
+			  showCancelButton: true,
+			  cancelButtonText: "Cancelar",
+			  confirmButtonClass: "btn-danger",
+			  confirmButtonText: "Eliminar",
+			  closeOnConfirm: false
+			},
+			function(){			  
+			  window.location.href=delvar;
+			});
+		}
+	</script>
+{% endblock %}

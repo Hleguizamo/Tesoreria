@@ -1,0 +1,9 @@
+index:
+    pattern:  /
+    defaults: { _controller: "WappProveedorBundle:Default:login" }
+wapp_proveedor:
+    resource: "@WappProveedorBundle/Resources/config/routing.yml"
+    prefix:   /proveedor
+wapp_administrador:
+    resource: "@WappAdministradorBundle/Resources/config/routing.yml"
+    prefix:   /administrador

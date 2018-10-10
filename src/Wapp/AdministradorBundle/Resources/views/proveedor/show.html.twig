@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Proveedor</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ proveedor.id }}</td>
+            </tr>
+            <tr>
+                <th>Nit</th>
+                <td>{{ proveedor.nit }}</td>
+            </tr>
+            <tr>
+                <th>Razonsocial</th>
+                <td>{{ proveedor.razonSocial }}</td>
+            </tr>
+            <tr>
+                <th>Nombrecontacto</th>
+                <td>{{ proveedor.nombreContacto }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ proveedor.email }}</td>
+            </tr>
+            <tr>
+                <th>Contrasena</th>
+                <td>{{ proveedor.contrasena }}</td>
+            </tr>
+            <tr>
+                <th>Actualizacion</th>
+                <td>{% if proveedor.actualizacion %}{{ proveedor.actualizacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{% if entity.estado %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cambioclave</th>
+                <td>{% if proveedor.cambioClave %}{{ proveedor.cambioClave|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Ultimaclave</th>
+                <td>{{ proveedor.ultimaClave }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('proveedor_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('proveedor_edit', { 'id': proveedor.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

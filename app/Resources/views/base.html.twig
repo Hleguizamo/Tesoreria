@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Copidrogas{% endblock %}</title>
+        {% block stylesheets %}
+		{# uncomment the following lines to compile SCSS assets with Assetic
+
+            {% stylesheets filter="scssphp" output="css/app.css"
+                "%kernel.root_dir%/Resources/assets/scss/bootstrap.scss"
+                "%kernel.root_dir%/Resources/assets/scss/font-awesome.scss"
+                "%kernel.root_dir%/Resources/assets/css/*.css"
+				"%kernel.root_dir%/Resources/assets/css/sweetalert.css"
+                "%kernel.root_dir%/Resources/assets/scss/main.scss"
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        #}
+
+            <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+		{% endblock %}
+		<link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
+		<script src="{{ asset('js/sweetalert.min.js') }}"></script>
+		
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body id="{% block body_id %}{% endblock %}">
+		{% block header %}
+            <header>
+                <div class="navbar navbar-default navbar-static-top" role="navigation">
+                    <div class="container" style="background-color:#FFFFFF;">
+                        <div class="navbar-header" style="background-color:#FFFFFF;">
+						<div style="position:relative; top:-20px; left:-20px; background-color:#FFFFFF;">
+                            <a class="navbar-brand" href="#">
+                                <img src="{{ asset('images/logo.png') }}" alt="Inicio" />
+                            </a>
+						</div>
+                          <button type="button" class="navbar-toggle"
+                                    data-toggle="collapse"
+                                    data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>  
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+								
+								{% if app.user and is_granted('ROLE_ADMINISTRADOR') %}									
+									<li>                                            
+									<div style="height:17px;">&nbsp;</div>
+									<i class="fa fa-user"></i><span style="font-size:14px; color:#2C3E50;">{{ app.user.nombre }}</span>
+                                 </li>
+									<li>
+										<a href="{{ path('proveedor_index') }}">
+											<i class="fa fa-users"></i> Proveedores
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('administrador_index') }}">
+											<i class="fa fa-users"></i> Administradores
+										</a>
+									</li>
+									
+									<li>
+                                        <a href="{{ path('administrador_default_logout') }}">
+                                            <i class="fa fa-sign-out"></i>Salir
+                                        </a>
+                                    </li>
+								{% endif %}
+								{% if app.user and is_granted('ROLE_USER') %}									
+									<li>                                            
+									<div style="height:2px;">&nbsp;</div>
+									<i class="fa fa-user"></i><span style="font-size:12px; color:#2C3E50;">{{ app.user.razonSocial }}
+									<br>
+									<i class="fa fa-list-alt"></i><b>Nit:</b> {{ app.user.nit }}</span>
+                                 </li>
+									<li>
+										<a href="{{ path('proveedor_editar', { id: app.user.id }) }}">
+											<i class="fa fa-users"></i> Cambiar datos
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('estadocuenta_index') }}">
+											<i class="fa fa-users"></i> Estado de cuenta
+										</a>
+									</li>
+									
+									<li>
+                                        <a href="{{ path('proveedor_default_logout') }}">
+                                            <i class="fa fa-sign-out"></i>Salir
+                                        </a>
+                                    </li>
+								{% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        {% endblock %}
+		<div class="container-fluid" style="min-width:400px;">
+		<div class="row">
+                    <div id="main" class="col-sm-12">
+		{{ include('default/_flash_messages.html.twig') }}
+		</div>
+		</div>
+		</div>
+        <div class="container-fluid body-container">
+            {% block body %}
+                <div class="row">
+                    <div id="main" class="col-sm-12">						
+                        {% block main %}{% endblock %}
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+		{% block footer %}
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div id="footer-copyright" class="col-md-6">
+                            <p>&copy; {{ 'now'|date('Y') }} - Copidrogas</p>                           
+                        </div>
+                        <div id="footer-resources" class="col-md-6">
+                            &nbsp;
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
+        {% block javascripts %}
+		
+        {# uncomment the following lines to combine and minimize JavaScript assets with Assetic
+            {% javascripts filter="?jsqueeze" output="js/app.js"
+                "%kernel.root_dir%/Resources/assets/js/jquery-2.1.4.js"
+                "%kernel.root_dir%/Resources/assets/js/moment.min.js"
+                "%kernel.root_dir%/Resources/assets/js/bootstrap-3.3.4.js"
+                "%kernel.root_dir%/Resources/assets/js/highlight.pack.js"
+                "%kernel.root_dir%/Resources/assets/js/bootstrap-datetimepicker.min.js"
+                "%kernel.root_dir%/Resources/assets/js/main.js" %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        #}
+            <script src="{{ asset('js/app.js') }}"></script>			
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,4 @@
+estadoCuenta_pdf:
+    path:     /{idProveedor}/pdf
+    defaults: { _controller: "WappAdministradorBundle:EstadoCuenta:pdf" }
+    methods:  [GET, POST]

@@ -1,0 +1,14 @@
+default:
+    pattern:  /
+    defaults: { _controller: "WappProveedorBundle:Default:index" }
+proveedor_default_login_error:
+    pattern:  /loginError
+    defaults: { _controller: "WappProveedorBundle:Default:loginError" }
+proveedor_default_login:
+    pattern:  /login
+    defaults: { _controller: "WappProveedorBundle:Default:login" }
+proveedor_default_login_check:
+    pattern: /login_check
+proveedor_default_logout:
+    pattern: /logout
+    defaults: { _controller: "WappProveedorBundle:Default:logout" }

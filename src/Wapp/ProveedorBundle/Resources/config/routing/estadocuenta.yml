@@ -1,0 +1,38 @@
+estadocuenta_index:
+    path:     /
+    defaults: { _controller: "WappProveedorBundle:EstadoCuenta:index" }
+    methods:  [GET, POST]
+
+estadocuenta_show:
+    path:     /{id}/show
+    defaults: { _controller: "WappProveedorBundle:EstadoCuenta:show" }
+    methods:  GET
+estadocuenta_find:
+    path:     /find
+    defaults: { _controller: "WappProveedorBundle:EstadoCuenta:find" }
+    methods:  [GET, POST]
+
+estadocuenta_exportxls:
+    path:     /exportxls
+    defaults: { _controller: "WappProveedorBundle:EstadoCuenta:exportxls" }
+    methods:  [GET, POST]
+
+estadocuenta_exportpdf:
+    path:     /exportpdf
+    defaults: { _controller: "WappProveedorBundle:EstadoCuenta:exportpdf" }
+    methods:  [GET, POST]
+
+estadocuenta_new:
+    path:     /new
+    defaults: { _controller: "WappProveedorBundle:EstadoCuenta:new" }
+    methods:  [GET, POST]
+
+estadocuenta_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "WappProveedorBundle:EstadoCuenta:edit" }
+    methods:  [GET, POST]
+
+estadocuenta_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "WappProveedorBundle:EstadoCuenta:delete" }
+    methods:  DELETE

@@ -1,0 +1,34 @@
+administrador_index:
+    path:     /
+    defaults: { _controller: "WappAdministradorBundle:Administrador:index" }
+    methods:  [GET, POST]
+
+administrador_find:
+    path:     /find
+    defaults: { _controller: "WappAdministradorBundle:Administrador:find" }
+    methods:  [GET, POST]
+
+administrador_show:
+    path:     /{id}/show
+    defaults: { _controller: "WappAdministradorBundle:Administrador:show" }
+    methods:  GET
+
+administrador_new:
+    path:     /new
+    defaults: { _controller: "WappAdministradorBundle:Administrador:new" }
+    methods:  [GET, POST]
+
+administrador_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "WappAdministradorBundle:Administrador:edit" }
+    methods:  [GET, POST]
+
+administrador_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "WappAdministradorBundle:Administrador:delete" }
+    methods:  DELETE
+
+administrador_dindex:
+    path:     /{id}/dindex
+    defaults: { _controller: "WappAdministradorBundle:Administrador:dindex" }
+    methods:  [GET, POST]

@@ -1,0 +1,89 @@
+<?php
+
+namespace Wapp\AdministradorBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Proveedor
+ *
+ * @ORM\Table(name="proveedor", uniqueConstraints={@ORM\UniqueConstraint(name="nit", columns={"nit"})})
+ * @ORM\Entity
+ */
+class Proveedor
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nit", type="string", length=25, nullable=false)
+     */
+    private $nit;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="razon_social", type="string", length=250, nullable=false)
+     */
+    private $razonSocial;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_contacto", type="string", length=250, nullable=false)
+     */
+    private $nombreContacto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=100, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contrasena", type="string", length=30, nullable=false)
+     */
+    private $contrasena;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="actualizacion", type="datetime", nullable=false)
+     */
+    private $actualizacion;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="estado", type="boolean", nullable=false)
+     */
+    private $estado = '1';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="cambio_clave", type="date", nullable=false)
+     */
+    private $cambioClave;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ultima_clave", type="string", length=30, nullable=false)
+     */
+    private $ultimaClave;
+
+
+}
+

@@ -1,0 +1,9 @@
+proveedor_inicio:
+    path:     /
+    defaults: { _controller: "WappProveedorBundle:Proveedor:index" }
+    methods:  GET
+
+proveedor_editar:
+    path:     /{id}/editar
+    defaults: { _controller: "WappProveedorBundle:Proveedor:edit" }
+    methods:  [GET, POST]

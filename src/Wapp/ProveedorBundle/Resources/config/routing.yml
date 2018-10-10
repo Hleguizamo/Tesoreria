@@ -1,0 +1,15 @@
+wapp_proveedor_estadoCuenta:
+    resource: "@WappProveedorBundle/Resources/config/routing/estadocuenta.yml"
+    prefix:   /estadocuenta
+wapp_proveedor_proveedor:
+    resource: "@WappProveedorBundle/Resources/config/routing/proveedor.yml"
+    prefix:   /proveedor	
+proveedor_homepage:
+    path:     /
+    defaults: { _controller: WappProveedorBundle:Default:login }
+proveedor_default:
+    resource: "@WappProveedorBundle/Resources/config/routing/default.yml"
+    prefix:   /default
+proveedor_proveedor:
+        resource: "@WappProveedorBundle/Resources/config/routing/proveedor.yml"
+        prefix:   /proveedor

@@ -1,0 +1,34 @@
+proveedor_index:
+    path:     /
+    defaults: { _controller: "WappAdministradorBundle:Proveedor:index" }
+    methods:  [GET, POST]
+
+proveedor_find:
+    path:     /find
+    defaults: { _controller: "WappAdministradorBundle:Proveedor:find" }
+    methods:  [GET, POST]
+
+proveedor_show:
+    path:     /{id}/show
+    defaults: { _controller: "WappAdministradorBundle:Proveedor:show" }
+    methods:  GET
+
+proveedor_new:
+    path:     /new
+    defaults: { _controller: "WappAdministradorBundle:Proveedor:new" }
+    methods:  [GET, POST]
+
+proveedor_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "WappAdministradorBundle:Proveedor:edit" }
+    methods:  [GET, POST]
+
+proveedor_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "WappAdministradorBundle:Proveedor:delete" }
+    methods:  DELETE
+
+proveedor_dindex:
+    path:     /{id}/dindex
+    defaults: { _controller: "WappAdministradorBundle:Proveedor:dindex" }
+    methods:  [GET, POST]
